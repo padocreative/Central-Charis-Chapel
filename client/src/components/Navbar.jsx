@@ -84,7 +84,7 @@ const Navbar = () => {
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {isOpen ? (
-                        <X className={scrolled || !isHome ? "text-gray-900" : "text-white"} />
+                        <X className={scrolled || !isHome || isOpen ? "text-gray-900" : "text-white"} />
                     ) : (
                         <Menu className={scrolled || !isHome ? "text-gray-900" : "text-white"} />
                     )}

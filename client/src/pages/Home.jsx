@@ -75,7 +75,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.4 }}
-                        className="text-5xl md:text-7xl lg:text-9xl font-heading font-bold text-white mb-6 tracking-tight leading-none"
+                        className="text-4xl md:text-7xl lg:text-9xl font-heading font-bold text-white mb-6 tracking-tight leading-none"
                     >
                         Central <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-light">Charis</span>
                     </motion.h1>
@@ -84,7 +84,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.6 }}
-                        className="font-heading italic text-xl md:text-3xl text-gray-200 mb-12 max-w-3xl mx-auto font-light"
+                        className="font-heading italic text-lg md:text-3xl text-gray-200 mb-12 max-w-3xl mx-auto font-light px-4"
                     >
                         "Delight thyself also in the Lord: and he shall give thee the desires of thine heart."
                     </motion.p>
@@ -151,12 +151,12 @@ const Home = () => {
                     <div className="bg-white rounded-3xl shadow-premium overflow-hidden">
                         <div className="grid grid-cols-1 lg:grid-cols-2">
                             {/* Left Content */}
-                            <div className="p-12 lg:p-20 bg-primary-dark text-white relative flex flex-col justify-center">
+                            <div className="p-6 md:p-12 lg:p-20 bg-primary-dark text-white relative flex flex-col justify-center">
                                 <div className="absolute top-0 left-0 w-full h-full opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
 
                                 <div className="relative z-10">
-                                    <h2 className="text-4xl lg:text-5xl font-heading font-bold mb-6">Need Prayer?</h2>
-                                    <p className="text-lg text-gray-300 mb-8 leading-relaxed">
+                                    <h2 className="text-3xl lg:text-5xl font-heading font-bold mb-6">Need Prayer?</h2>
+                                    <p className="text-base lg:text-lg text-gray-300 mb-8 leading-relaxed">
                                         We believe that prayer changes things. Whatever you are going through, our pastoral team is ready to stand in faith with you.
                                     </p>
 
@@ -168,7 +168,7 @@ const Home = () => {
                             </div>
 
                             {/* Right Form */}
-                            <div className="p-12 lg:p-20 bg-white">
+                            <div className="p-6 md:p-12 lg:p-20 bg-white">
                                 <PrayerRequestForm />
                             </div>
                         </div>
