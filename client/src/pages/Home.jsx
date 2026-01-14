@@ -116,15 +116,15 @@ const Home = () => {
                 </motion.div>
             </section>
 
-            {/* Featured Sermons Section - Negative Margin Overlap */}
-            <section className="relative z-20 -mt-24 pb-24">
+            {/* Featured Sermons Section - Adaptable Layout */}
+            <section className="relative z-20 mt-12 md:-mt-24 pb-12 md:pb-24">
                 <div className="container mx-auto px-6">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-10 text-white px-2">
-                        <div>
-                            <h2 className="text-3xl font-heading font-bold">Latest Messages</h2>
-                            <p className="text-gray-300 mt-2">Catch up on what you missed</p>
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-10 px-2">
+                        <div className="text-gray-900 md:text-white mb-6 md:mb-0">
+                            <h2 className="text-2xl md:text-3xl font-heading font-bold">Latest Messages</h2>
+                            <p className="text-gray-600 md:text-gray-300 mt-2 text-base">Catch up on what you missed</p>
                         </div>
-                        <Link to="/sermons" className="hidden md:flex items-center text-gold hover:text-white transition-colors text-sm font-bold uppercase tracking-widest mt-4 md:mt-0">
+                        <Link to="/sermons" className="flex items-center text-primary md:text-gold hover:text-primary-dark md:hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-widest">
                             View All Archive <ArrowRight size={16} className="ml-2" />
                         </Link>
                     </div>
