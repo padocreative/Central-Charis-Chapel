@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PublicLayout from '../layouts/PublicLayout';
 import SermonCard from '../components/SermonCard';
