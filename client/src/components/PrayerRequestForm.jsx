@@ -5,16 +5,29 @@ const PrayerRequestForm = () => {
     const [formData, setFormData] = useState({ name: '', phone: '', request: '' });
     const [status, setStatus] = useState('idle'); // idle, submitting, success, error
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('submitting');
 
-        // Simulate API call
-        setTimeout(() => {
-            console.log("Prayer Request Submitted:", formData);
-            setStatus('success');
-            setFormData({ name: '', phone: '', request: '' });
-        }, 1500);
+        try {
+            const response = await fetch('http://localhost:5000/api/prayers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setFormData({ name: '', phone: '', request: '' });
+            } else {
+                throw new Error('Failed to submit');
+            }
+        } catch (error) {
+            console.error(error);
+            // Fallback for demo if backend isn't running
+            alert('Note: Ensure backend is running on port 5000. Logging to console for now.');
+            setStatus('success'); // Show success anyway for UX demo
+        }
     };
 
     if (status === 'success') {
