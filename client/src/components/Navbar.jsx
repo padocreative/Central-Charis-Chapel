@@ -27,8 +27,8 @@ const Navbar = () => {
     return (
         <nav className={cn(
             "fixed w-full z-50 transition-all duration-500 border-b border-transparent",
-            scrolled
-                ? "bg-white/90 backdrop-blur-xl py-3 shadow-sm border-gray-100"
+            scrolled || isOpen
+                ? "bg-white py-3 shadow-sm border-gray-100"
                 : isHome
                     ? "bg-transparent py-6"
                     : "bg-primary py-4"
@@ -38,11 +38,11 @@ const Navbar = () => {
                 <Link to="/" className="relative z-50 group">
                     <h1 className={cn(
                         "text-2xl font-heading font-bold tracking-tight transition-colors duration-300",
-                        scrolled || !isHome ? "text-primary-dark" : "text-white"
+                        scrolled || !isHome || isOpen ? "text-primary-dark" : "text-white"
                     )}>
                         Central <span className={cn(
                             "text-gold transition-colors",
-                            scrolled || !isHome ? "text-gold-dark" : "text-gold-light"
+                            scrolled || !isHome || isOpen ? "text-gold-dark" : "text-gold-light"
                         )}>Charis</span>
                     </h1>
                 </Link>
