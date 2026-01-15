@@ -61,10 +61,10 @@ const Home = () => {
                 </motion.div>
 
                 {/* Content Container */}
-                <div className="relative z-10 container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-end md:justify-between pt-20 md:pt-0">
+                <div className="relative z-10 container mx-auto px-6 h-full flex items-center justify-center md:justify-between pt-20">
 
                     {/* Left: Text Content */}
-                    <div className="text-center md:text-left max-w-3xl md:w-1/2 z-20 mb-4 md:mb-0 mt-8 md:mt-0">
+                    <div className="text-center md:text-left max-w-3xl md:w-1/2 z-20 relative">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -109,20 +109,20 @@ const Home = () => {
                         </motion.div>
                     </div>
 
-                    {/* Right: Pastor Image - Stacked on Mobile */}
+                    {/* Right: Pastor Image - Background Style on Mobile, Split on Desktop */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1.2, delay: 0.5 }}
-                        className="relative w-full md:w-1/2 h-[40vh] md:h-full flex items-end justify-center md:justify-end z-10 pointer-events-none md:pointer-events-auto mt-4 md:mt-0"
+                        className="absolute inset-0 md:relative md:inset-auto w-full md:w-1/2 h-full flex items-end justify-center md:justify-end z-0 md:z-10 pointer-events-none md:pointer-events-auto"
                     >
                         <div className="relative h-full w-full flex items-end justify-center md:justify-end">
                             {/* Pastor Image */}
                             <img
                                 src="/pastor.png"
                                 alt="Senior Pastor"
-                                className="object-contain max-h-full w-auto drop-shadow-2xl mask-image-b-fade opacity-90 md:opacity-100"
-                                style={{ maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)' }}
+                                className="object-contain max-h-[90%] w-auto drop-shadow-2xl mask-image-b-fade opacity-20 md:opacity-100"
+                                style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
                             />
                             {/* Gradient blend at bottom */}
                             <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
