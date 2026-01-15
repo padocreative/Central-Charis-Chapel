@@ -114,7 +114,7 @@ const Home = () => {
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1.2, delay: 0.5 }}
-                        className="absolute inset-0 md:relative md:inset-auto w-full md:w-1/2 h-full flex items-end justify-center md:justify-end z-0 md:z-10 pointer-events-none md:pointer-events-auto pb-24 md:pb-0"
+                        className="absolute inset-0 md:relative md:inset-auto w-full md:w-1/2 h-full flex items-end justify-center md:justify-end z-0 md:z-10 pointer-events-none md:pointer-events-auto pb-32 md:pb-0"
                     >
                         <div className="relative h-full w-full flex items-end justify-center md:justify-end">
                             {/* Pastor Image */}
@@ -124,8 +124,6 @@ const Home = () => {
                                 className="object-contain max-h-[90%] w-auto drop-shadow-2xl mask-image-b-fade opacity-40 md:opacity-80"
                                 style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
                             />
-                            {/* Gradient blend at bottom */}
-                            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                         </div>
                     </motion.div>
                 </div>
