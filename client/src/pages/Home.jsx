@@ -44,7 +44,7 @@ const Home = () => {
     return (
         <PublicLayout>
             {/* Cinematic Hero Section */}
-            <section className="relative h-screen min-h-[550px] md:min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
+            <section className="relative h-screen min-h-[700px] md:min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
                 {/* Parallax Video/Image Background */}
                 <motion.div
                     style={{ y: y1 }}
@@ -61,16 +61,16 @@ const Home = () => {
                 </motion.div>
 
                 {/* Content Container */}
-                <div className="relative z-10 container mx-auto px-6 h-full flex items-center justify-center md:justify-between pt-20">
+                <div className="relative z-10 container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-between pt-20 md:pt-0">
 
-                    {/* Left: Text Content */}
-                    <div className="text-center md:text-left max-w-3xl md:w-1/2 z-20 relative">
+                    {/* Left: Text Content - Top Half on Mobile */}
+                    <div className="text-center md:text-left max-w-3xl md:w-1/2 z-20 flex flex-col justify-center h-[55%] md:h-full">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.2 }}
                         >
-                            <span className="inline-block py-1 px-3 border border-gold/50 rounded-full text-gold text-sm font-bold uppercase tracking-[0.2em] mb-6 backdrop-blur-sm">
+                            <span className="inline-block py-1 px-3 border border-gold/50 rounded-full text-gold text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-4 backdrop-blur-sm">
                                 Welcome Home
                             </span>
                         </motion.div>
@@ -79,7 +79,7 @@ const Home = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.4 }}
-                            className="text-4xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-6 tracking-tight leading-none"
+                            className="text-4xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-4 tracking-tight leading-none"
                         >
                             Central <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-light">Charis</span>
                         </motion.h1>
@@ -88,7 +88,7 @@ const Home = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.6 }}
-                            className="font-heading italic text-lg md:text-2xl text-gray-200 mb-10 font-light leading-relaxed px-2 md:px-0"
+                            className="font-heading italic text-base md:text-2xl text-gray-200 mb-8 font-light leading-relaxed px-2 md:px-0"
                         >
                             "Delight thyself also in the Lord: and he shall give thee the desires of thine heart."
                         </motion.p>
@@ -97,32 +97,32 @@ const Home = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.8 }}
-                            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+                            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center md:justify-start"
                         >
-                            <Link to="/sermons" className="group bg-gold hover:bg-white text-primary-dark px-8 py-4 rounded-full font-bold text-base transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-gold/20">
+                            <Link to="/sermons" className="group bg-gold hover:bg-white text-primary-dark px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-sm md:text-base transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-gold/20">
                                 <span>Watch Sermon</span>
                                 <Play size={18} className="ml-2 group-hover:scale-110 transition-transform" fill="currentColor" />
                             </Link>
-                            <Link to="/about" className="group bg-white/10 border border-white/20 hover:bg-white/20 text-white px-8 py-4 rounded-full font-bold text-base transition-all flex items-center justify-center backdrop-blur-sm">
+                            <Link to="/about" className="group bg-white/10 border border-white/20 hover:bg-white/20 text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold text-base transition-all flex items-center justify-center backdrop-blur-sm">
                                 I'm New Here
                             </Link>
                         </motion.div>
                     </div>
 
-                    {/* Right: Pastor Image - Background Style on Mobile, Split on Desktop */}
+                    {/* Right: Pastor Image - Bottom Half on Mobile (Clean Anchor) */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1.2, delay: 0.5 }}
-                        className="absolute inset-0 md:relative md:inset-auto w-full md:w-1/2 h-full flex items-end justify-center md:justify-end z-0 md:z-10 pointer-events-none md:pointer-events-auto pb-32 md:pb-0"
+                        className="relative w-full md:w-1/2 h-[45%] md:h-full flex items-end justify-center md:justify-end z-10"
                     >
                         <div className="relative h-full w-full flex items-end justify-center md:justify-end">
                             {/* Pastor Image */}
                             <img
                                 src="/pastor.png"
                                 alt="Senior Pastor"
-                                className="object-contain max-h-[90%] w-auto drop-shadow-2xl mask-image-b-fade opacity-40 md:opacity-80"
-                                style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
+                                className="object-contain max-h-full w-auto drop-shadow-2xl mask-image-b-fade opacity-100 md:opacity-80"
+                                style={{ maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)' }}
                             />
                         </div>
                     </motion.div>
