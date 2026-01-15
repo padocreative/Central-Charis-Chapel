@@ -35,9 +35,10 @@ const Navbar = () => {
         )}>
             <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
                 {/* Logo */}
-                <Link to="/" className="relative z-50 group">
+                <Link to="/" className="relative z-50 group flex items-center gap-3">
+                    <img src="/logo.png" alt="Central Charis Logo" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
                     <h1 className={cn(
-                        "text-2xl font-heading font-bold tracking-tight transition-colors duration-300",
+                        "text-xl md:text-2xl font-heading font-bold tracking-tight transition-colors duration-300",
                         scrolled || !isHome || isOpen ? "text-primary-dark" : "text-white"
                     )}>
                         Central <span className={cn(
