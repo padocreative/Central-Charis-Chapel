@@ -48,7 +48,7 @@ const Home = () => {
                 {/* Parallax Video/Image Background */}
                 <motion.div
                     style={{ y: y1 }}
-                    className="absolute inset-0 z-0 opacity-60"
+                    className="absolute inset-0 z-0 opacity-40"
                 >
                     <img
                         src="https://images.unsplash.com/photo-1543791959-12b3f543281a?q=80&w=2070&auto=format&fit=crop"
@@ -56,52 +56,77 @@ const Home = () => {
                         className="w-full h-[120%] object-cover"
                     />
                     {/* Overlay Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-primary-dark/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-primary-dark/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/80 via-transparent to-transparent" />
                 </motion.div>
 
-                {/* Content */}
-                <div className="relative z-10 container mx-auto px-6 text-center">
+                {/* Content Container */}
+                <div className="relative z-10 container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-center md:justify-between pt-20">
+
+                    {/* Left: Text Content */}
+                    <div className="text-center md:text-left max-w-3xl md:w-1/2 z-20">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.2 }}
+                        >
+                            <span className="inline-block py-1 px-3 border border-gold/50 rounded-full text-gold text-sm font-bold uppercase tracking-[0.2em] mb-6 backdrop-blur-sm">
+                                Welcome Home
+                            </span>
+                        </motion.div>
+
+                        <motion.h1
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.4 }}
+                            className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-6 tracking-tight leading-none"
+                        >
+                            Central <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-light">Charis</span>
+                        </motion.h1>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.6 }}
+                            className="font-heading italic text-lg md:text-2xl text-gray-200 mb-10 font-light leading-relaxed"
+                        >
+                            "Delight thyself also in the Lord: and he shall give thee the desires of thine heart."
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.8 }}
+                            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+                        >
+                            <Link to="/sermons" className="group bg-gold hover:bg-white text-primary-dark px-8 py-4 rounded-full font-bold text-base transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-gold/20">
+                                <span>Watch Sermon</span>
+                                <Play size={18} className="ml-2 group-hover:scale-110 transition-transform" fill="currentColor" />
+                            </Link>
+                            <Link to="/about" className="group bg-white/10 border border-white/20 hover:bg-white/20 text-white px-8 py-4 rounded-full font-bold text-base transition-all flex items-center justify-center backdrop-blur-sm">
+                                I'm New Here
+                            </Link>
+                        </motion.div>
+                    </div>
+
+                    {/* Right: Pastor Image (Hidden on very small mobile to save space, visible on MD+) */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.2 }}
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1.2, delay: 0.5 }}
+                        className="absolute bottom-0 right-0 md:relative md:w-1/2 h-[50vh] md:h-full flex items-end justify-center md:justify-end z-10 opacity-30 md:opacity-100 pointer-events-none md:pointer-events-auto"
                     >
-                        <span className="inline-block py-1 px-3 border border-gold/50 rounded-full text-gold text-sm font-bold uppercase tracking-[0.2em] mb-6 backdrop-blur-sm">
-                            Welcome Home
-                        </span>
-                    </motion.div>
-
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.4 }}
-                        className="text-4xl md:text-7xl lg:text-9xl font-heading font-bold text-white mb-6 tracking-tight leading-none"
-                    >
-                        Central <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-light">Charis</span>
-                    </motion.h1>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.6 }}
-                        className="font-heading italic text-lg md:text-3xl text-gray-200 mb-12 max-w-3xl mx-auto font-light px-4"
-                    >
-                        "Delight thyself also in the Lord: and he shall give thee the desires of thine heart."
-                    </motion.p>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.8 }}
-                        className="flex flex-col sm:flex-row gap-6 justify-center"
-                    >
-                        <Link to="/sermons" className="group bg-gold hover:bg-white text-primary-dark px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 flex items-center justify-center">
-                            <span>Watch Latest Sermon</span>
-                            <Play size={20} className="ml-3 group-hover:scale-110 transition-transform" fill="currentColor" />
-                        </Link>
-                        <Link to="/about" className="group bg-transparent border border-white/30 hover:border-white hover:bg-white/5 text-white px-10 py-4 rounded-full font-bold text-lg transition-all flex items-center justify-center backdrop-blur-sm">
-                            I'm New Here
-                        </Link>
+                        <div className="relative h-full w-full flex items-end justify-end">
+                            {/* Pastor Image */}
+                            <img
+                                src="/pastor.png"
+                                alt="Senior Pastor"
+                                className="object-contain max-h-[85%] w-auto drop-shadow-2xl mask-image-b-fade"
+                                style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
+                            />
+                            {/* Gradient blend at bottom */}
+                            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        </div>
                     </motion.div>
                 </div>
 
@@ -110,7 +135,7 @@ const Home = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.5, duration: 1 }}
-                    className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce"
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 animate-bounce z-30"
                 >
                     <ChevronDown size={32} />
                 </motion.div>
