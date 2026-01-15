@@ -52,7 +52,7 @@ const Home = () => {
                 >
                     <img
                         src="https://images.unsplash.com/photo-1543791959-12b3f543281a?q=80&w=2070&auto=format&fit=crop"
-                        alt="Worship Background"
+                        alt=""
                         className="w-full h-[120%] object-cover"
                     />
                     {/* Overlay Gradient */}
