@@ -28,14 +28,14 @@ const Navbar = () => {
         <nav className={cn(
             "fixed w-full z-50 transition-all duration-500 border-b border-transparent",
             scrolled || isOpen
-                ? "bg-white py-3 shadow-sm border-gray-100"
+                ? "bg-white py-2 shadow-sm border-gray-100"
                 : isHome
-                    ? "bg-transparent py-6"
-                    : "bg-primary py-4"
+                    ? "bg-transparent py-4"
+                    : "bg-primary py-3"
         )}>
             <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
                 <Link to="/" className="relative z-50 group flex items-center gap-3">
-                    <img src="/logo.png" alt="Central Charis Logo" className="w-20 h-20 md:w-28 md:h-28 object-contain" />
+                    <img src="/logo.png" alt="Central Charis Logo" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
                     <h1 className={cn(
                         "text-xl md:text-2xl font-heading font-bold tracking-tight transition-colors duration-300",
                         scrolled || !isHome || isOpen ? "text-primary-dark" : "text-white"
