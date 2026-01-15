@@ -51,7 +51,7 @@ const Home = () => {
                     className="absolute inset-0 z-0 opacity-40"
                 >
                     <img
-                        src="https://images.unsplash.com/photo-1543791959-12b3f543281a?q=80&w=2070&auto=format&fit=crop"
+                        src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=2070&auto=format&fit=crop"
                         alt=""
                         className="w-full h-[120%] object-cover"
                     />
