@@ -44,7 +44,7 @@ const Home = () => {
     return (
         <PublicLayout>
             {/* Cinematic Hero Section */}
-            <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
+            <section className="relative h-screen min-h-[550px] md:min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
                 {/* Parallax Video/Image Background */}
                 <motion.div
                     style={{ y: y1 }}
