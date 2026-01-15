@@ -98,7 +98,7 @@ const Navbar = () => {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="fixed inset-0 bg-white z-40 pt-24 px-6 md:hidden"
+                        className="fixed inset-0 bg-white z-40 pt-20 px-6 md:hidden"
                     >
                         <div className="flex flex-col space-y-6 text-center">
                             {navLinks.map((link) => (
