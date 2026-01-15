@@ -1,8 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Login from './pages/admin/Login';
 import AdminLayout from './layouts/AdminLayout';
 import DashboardHome from './pages/admin/DashboardHome';
 import SermonManager from './pages/admin/SermonManager';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -13,15 +15,20 @@ function App() {
       <Route path="/about" element={<div className="p-20 text-center">About Page (Coming Soon)</div>} />
       <Route path="/give" element={<div className="p-20 text-center">Give Page (Coming Soon)</div>} />
 
-      {/* Admin Routes */}
+      {/* Admin Login */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Admin Routes (Protected) */}
       <Route path="/admin/*" element={
-        <AdminLayout>
-          <Routes>
-            <Route index element={<DashboardHome />} />
-            <Route path="sermons" element={<SermonManager />} />
-            <Route path="*" element={<div className="text-center mt-20">Page Not Found</div>} />
-          </Routes>
-        </AdminLayout>
+        <ProtectedRoute>
+          <AdminLayout>
+            <Routes>
+              <Route index element={<DashboardHome />} />
+              <Route path="sermons" element={<SermonManager />} />
+              <Route path="*" element={<div className="text-center mt-20">Page Not Found</div>} />
+            </Routes>
+          </AdminLayout>
+        </ProtectedRoute>
       } />
     </Routes>
   );
