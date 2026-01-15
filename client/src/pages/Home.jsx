@@ -121,7 +121,7 @@ const Home = () => {
                             <img
                                 src="/pastor.png"
                                 alt="Senior Pastor"
-                                className="object-contain max-h-[90%] w-auto drop-shadow-2xl mask-image-b-fade opacity-20 md:opacity-100"
+                                className="object-contain max-h-[90%] w-auto drop-shadow-2xl mask-image-b-fade opacity-20 md:opacity-80"
                                 style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
                             />
                             {/* Gradient blend at bottom */}
