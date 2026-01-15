@@ -61,10 +61,10 @@ const Home = () => {
                 </motion.div>
 
                 {/* Content Container */}
-                <div className="relative z-10 container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-center md:justify-between pt-20">
+                <div className="relative z-10 container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-end md:justify-between pt-20 md:pt-0">
 
                     {/* Left: Text Content */}
-                    <div className="text-center md:text-left max-w-3xl md:w-1/2 z-20">
+                    <div className="text-center md:text-left max-w-3xl md:w-1/2 z-20 mb-4 md:mb-0 mt-8 md:mt-0">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ const Home = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.4 }}
-                            className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-6 tracking-tight leading-none"
+                            className="text-4xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-6 tracking-tight leading-none"
                         >
                             Central <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-light">Charis</span>
                         </motion.h1>
@@ -88,7 +88,7 @@ const Home = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.6 }}
-                            className="font-heading italic text-lg md:text-2xl text-gray-200 mb-10 font-light leading-relaxed"
+                            className="font-heading italic text-lg md:text-2xl text-gray-200 mb-10 font-light leading-relaxed px-2 md:px-0"
                         >
                             "Delight thyself also in the Lord: and he shall give thee the desires of thine heart."
                         </motion.p>
@@ -109,20 +109,20 @@ const Home = () => {
                         </motion.div>
                     </div>
 
-                    {/* Right: Pastor Image (Hidden on very small mobile to save space, visible on MD+) */}
+                    {/* Right: Pastor Image - Stacked on Mobile */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1.2, delay: 0.5 }}
-                        className="absolute bottom-0 right-0 md:relative md:w-1/2 h-[50vh] md:h-full flex items-end justify-center md:justify-end z-10 opacity-30 md:opacity-100 pointer-events-none md:pointer-events-auto"
+                        className="relative w-full md:w-1/2 h-[40vh] md:h-full flex items-end justify-center md:justify-end z-10 pointer-events-none md:pointer-events-auto mt-4 md:mt-0"
                     >
-                        <div className="relative h-full w-full flex items-end justify-end">
+                        <div className="relative h-full w-full flex items-end justify-center md:justify-end">
                             {/* Pastor Image */}
                             <img
                                 src="/pastor.png"
                                 alt="Senior Pastor"
-                                className="object-contain max-h-[85%] w-auto drop-shadow-2xl mask-image-b-fade"
-                                style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
+                                className="object-contain max-h-full w-auto drop-shadow-2xl mask-image-b-fade opacity-90 md:opacity-100"
+                                style={{ maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)' }}
                             />
                             {/* Gradient blend at bottom */}
                             <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
