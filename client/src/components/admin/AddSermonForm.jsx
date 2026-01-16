@@ -54,8 +54,8 @@ const AddSermonForm = ({ onSubmit, initialData = null, onCancel, isSubmitting = 
             return;
         }
 
-        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-        const facebookRegex = /^(https?:\/\/)?(www\.)?(facebook\.com|fb\.watch)\/.+$/;
+        const youtubeRegex = /^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be)\/.+/;
+        const facebookRegex = /^(https?:\/\/)?(www\.|web\.|m\.)?(facebook\.com|fb\.watch)\/.+/;
 
         if (youtubeRegex.test(url)) {
             setLinkStatus('valid');

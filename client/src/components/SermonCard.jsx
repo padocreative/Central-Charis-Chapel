@@ -9,9 +9,15 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_ur
     // Robustly resolve the video URL
     let videoUrl = url || videoLink || video_url;
 
-    // Ensure protocol is present if missing
-    if (videoUrl && !videoUrl.startsWith('http')) {
-        videoUrl = `https://${videoUrl}`;
+    // Clean and fix URL
+    if (videoUrl) {
+        // Remove whitespace
+        videoUrl = videoUrl.toString().trim();
+
+        // Add protocol if missing
+        if (!videoUrl.startsWith('http')) {
+            videoUrl = `https://${videoUrl}`;
+        }
     }
 
     return (
