@@ -3,11 +3,13 @@ import { Plus } from 'lucide-react';
 import { useSermons } from '../../context/SermonContext';
 import AddSermonForm from '../../components/admin/AddSermonForm';
 import AdminSermonList from '../../components/admin/AdminSermonList';
+import StatusModal from '../../components/admin/StatusModal';
 
 const SermonManager = () => {
     const { sermons, addSermon, deleteSermon, updateSermon } = useSermons();
     const [showForm, setShowForm] = useState(false);
     const [editingSermon, setEditingSermon] = useState(null);
+    const [modalConfig, setModalConfig] = useState({ isOpen: false, type: 'success', title: '', message: '' });
 
     const handleAddNew = () => {
         setEditingSermon(null);
@@ -19,18 +21,65 @@ const SermonManager = () => {
         setShowForm(true);
     };
 
-    const handleDelete = async (id) => {
-        await deleteSermon(id);
+    // Triggered when user clicks "Delete" on the list item
+    const handleDeleteRequest = (id) => {
+        setModalConfig({
+            isOpen: true,
+            type: 'confirm',
+            title: 'Delete Sermon?',
+            message: 'Are you sure you want to delete this sermon? This action cannot be undone.',
+            onConfirm: () => confirmDelete(id)
+        });
+    };
+
+    const confirmDelete = async (id) => {
+        try {
+            await deleteSermon(id);
+            setModalConfig({
+                isOpen: true,
+                type: 'success',
+                title: 'Deleted',
+                message: 'The sermon has been successfully deleted.',
+            });
+        } catch (error) {
+            setModalConfig({
+                isOpen: true,
+                type: 'error',
+                title: 'Error',
+                message: 'Failed to delete the sermon. Please try again.',
+            });
+        }
     };
 
     const handleFormSubmit = async (data) => {
-        if (editingSermon) {
-            await updateSermon({ ...editingSermon, ...data });
-        } else {
-            await addSermon(data);
+        try {
+            if (editingSermon) {
+                await updateSermon({ ...editingSermon, ...data });
+                setModalConfig({
+                    isOpen: true,
+                    type: 'success',
+                    title: 'Sermon Updated',
+                    message: 'The sermon details have been updated successfully.',
+                });
+            } else {
+                await addSermon(data);
+                setModalConfig({
+                    isOpen: true,
+                    type: 'success',
+                    title: 'Sermon Published',
+                    message: 'Your new sermon is now live on the website.',
+                });
+            }
+            setShowForm(false);
+            setEditingSermon(null);
+        } catch (error) {
+            setModalConfig({
+                isOpen: true,
+                type: 'error',
+                title: 'Operation Failed',
+                message: 'Something went wrong. Please try again later.',
+            });
         }
-        setShowForm(false);
-        setEditingSermon(null);
     };
 
     const handleCancel = () => {
@@ -40,6 +89,11 @@ const SermonManager = () => {
 
     return (
         <div>
+            <StatusModal
+                {...modalConfig}
+                onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
+            />
+
             {!showForm ? (
                 <>
                     <div className="flex justify-between items-center mb-8">
@@ -59,7 +113,7 @@ const SermonManager = () => {
                     <AdminSermonList
                         sermons={sermons}
                         onEdit={handleEdit}
-                        onDelete={handleDelete}
+                        onDelete={handleDeleteRequest}
                     />
                 </>
             ) : (

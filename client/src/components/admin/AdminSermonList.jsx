@@ -3,9 +3,7 @@ import { Edit, Trash2, Youtube, Facebook, Video, Play } from 'lucide-react';
 const AdminSermonList = ({ sermons, onEdit, onDelete }) => {
 
     const handleDeleteClick = (id) => {
-        if (window.confirm("Are you sure you want to delete this sermon? This action cannot be undone.")) {
-            onDelete(id);
-        }
+        onDelete(id);
     };
 
     if (!sermons || sermons.length === 0) {
@@ -64,10 +62,10 @@ const AdminSermonList = ({ sermons, onEdit, onDelete }) => {
                                 {/* Platform Badge */}
                                 <td className="px-6 py-4">
                                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${sermon.type === 'YouTube' || (sermon.url && sermon.url.includes('youtu'))
-                                            ? 'bg-red-50 text-red-700 border-red-100'
-                                            : sermon.type === 'Facebook' || (sermon.url && sermon.url.includes('facebook'))
-                                                ? 'bg-blue-50 text-blue-700 border-blue-100'
-                                                : 'bg-gray-100 text-gray-600 border-gray-200'
+                                        ? 'bg-red-50 text-red-700 border-red-100'
+                                        : sermon.type === 'Facebook' || (sermon.url && sermon.url.includes('facebook'))
+                                            ? 'bg-blue-50 text-blue-700 border-blue-100'
+                                            : 'bg-gray-100 text-gray-600 border-gray-200'
                                         }`}>
                                         {sermon.type === 'YouTube' || (sermon.url && sermon.url.includes('youtu')) ? <Youtube size={12} /> :
                                             sermon.type === 'Facebook' || (sermon.url && sermon.url.includes('facebook')) ? <Facebook size={12} /> : <Video size={12} />}

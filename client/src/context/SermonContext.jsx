@@ -86,7 +86,7 @@ export const SermonProvider = ({ children }) => {
         const { error } = await supabase.from('sermons').insert([newSermon]);
         if (error) {
             console.error("Error adding sermon:", error);
-            alert("Failed to add sermon. See console for details.");
+            throw error;
         }
     };
 
@@ -96,7 +96,7 @@ export const SermonProvider = ({ children }) => {
         const { error } = await supabase.from('sermons').delete().eq('id', id);
         if (error) {
             console.error("Error deleting sermon:", error);
-            alert("Failed to delete sermon.");
+            throw error;
         }
     };
 
@@ -107,7 +107,7 @@ export const SermonProvider = ({ children }) => {
         const { error } = await supabase.from('sermons').update(updates).eq('id', id);
         if (error) {
             console.error("Error updating sermon:", error);
-            alert("Failed to update sermon.");
+            throw error;
         }
     };
 
