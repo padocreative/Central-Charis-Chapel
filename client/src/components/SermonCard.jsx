@@ -3,15 +3,22 @@ import VideoModal from './VideoModal';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const SermonCard = ({ title, preacher, date, thumbnail, url, type }) => {
+const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_url, type }) => {
     const [showModal, setShowModal] = useState(false);
+
+    // Robustly resolve the video URL
+    let videoUrl = url || videoLink || video_url;
+
+    // Ensure protocol is present if missing
+    if (videoUrl && !videoUrl.startsWith('http')) {
+        videoUrl = `https://${videoUrl}`;
+    }
 
     return (
         <>
             <motion.div
                 whileHover={{ y: -10 }}
-                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 cursor-pointer w-full"
-                onClick={() => setShowModal(true)}
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 w-full"
             >
                 {/* Thumbnail Layer */}
                 <div className="relative h-64 overflow-hidden">
@@ -30,7 +37,10 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, type }) => {
                     </div>
 
                     {/* Play Button Overlay */}
-                    <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div
+                        onClick={() => setShowModal(true)}
+                        className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                    >
                         <div className="w-16 h-16 bg-gold rounded-full flex items-center justify-center shadow-lg transform scale-50 group-hover:scale-100 transition-transform duration-300">
                             <Play fill="white" className="text-white ml-1" size={28} />
                         </div>
@@ -50,7 +60,10 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, type }) => {
                     </h3>
 
                     <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                        <span className="text-xs font-bold text-primary uppercase tracking-wider group-hover:translate-x-1 transition-transform inline-flex items-center">
+                        <span
+                            onClick={() => setShowModal(true)}
+                            className="text-xs font-bold text-primary uppercase tracking-wider group-hover:translate-x-1 transition-transform inline-flex items-center cursor-pointer hover:text-primary-dark"
+                        >
                             Watch Sermon
                         </span>
                         <Clock size={14} className="text-gray-400" />
@@ -62,7 +75,7 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, type }) => {
             <VideoModal
                 isOpen={showModal}
                 onClose={() => setShowModal(false)}
-                url={url}
+                url={videoUrl}
                 playing={true}
             />
         </>
