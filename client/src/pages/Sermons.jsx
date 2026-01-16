@@ -10,14 +10,14 @@ const Sermons = () => {
     return (
         <PublicLayout>
             {/* Header Section */}
-            <section className="relative pt-32 pb-20 bg-gray-50 overflow-hidden">
-                <div className="absolute inset-0 opacity-10">
+            <section className="relative pt-32 pb-20 bg-primary-dark overflow-hidden">
+                <div className="absolute inset-0 opacity-20">
                     <img
                         src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=2000"
                         alt="Background"
-                        className="w-full h-full object-cover grayscale"
+                        className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-white/50"></div>
+                    <div className="absolute inset-0 bg-primary-dark mix-blend-multiply"></div>
                 </div>
 
                 <div className="container mx-auto px-6 relative z-10 text-center">
@@ -26,13 +26,13 @@ const Sermons = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
                     >
-                        <span className="inline-block py-1 px-3 border border-primary/20 rounded-full text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">
+                        <span className="inline-block py-1 px-3 border border-gold/50 rounded-full text-gold text-xs font-bold uppercase tracking-[0.2em] mb-4">
                             Sermon Library
                         </span>
-                        <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary-dark mb-6">
+                        <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 drop-shadow-lg">
                             Watch & Listen
                         </h1>
-                        <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-gray-100 text-lg max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                             Explore our complete collection of messages. Filter by series, topic, or speaker to find exactly what you need.
                         </p>
                     </motion.div>

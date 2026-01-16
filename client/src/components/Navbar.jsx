@@ -38,11 +38,11 @@ const Navbar = () => {
                     <img src="/logo.png" alt="Central Charis Logo" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
                     <h1 className={cn(
                         "text-xl md:text-2xl font-heading font-bold tracking-tight transition-colors duration-300",
-                        scrolled || !isHome || isOpen ? "text-primary-dark" : "text-white"
+                        scrolled || isOpen ? "text-primary-dark" : "text-white"
                     )}>
                         Central <span className={cn(
                             "text-gold transition-colors",
-                            scrolled || !isHome || isOpen ? "text-gold-dark" : "text-gold-light"
+                            scrolled || isOpen ? "text-gold-dark" : "text-gold-light"
                         )}>Charis</span>
                     </h1>
                 </Link>
@@ -55,13 +55,13 @@ const Navbar = () => {
                             to={link.path}
                             className={cn(
                                 "text-sm font-medium uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5 relative group",
-                                scrolled || !isHome ? "text-gray-700 hover:text-primary" : "text-white/90 hover:text-white"
+                                scrolled ? "text-gray-700 hover:text-primary" : "text-white/90 hover:text-white"
                             )}
                         >
                             {link.name}
                             <span className={cn(
                                 "absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full",
-                                scrolled || !isHome ? "bg-primary" : "bg-gold"
+                                scrolled ? "bg-primary" : "bg-gold"
                             )} />
                         </Link>
                     ))}
@@ -69,7 +69,7 @@ const Navbar = () => {
                         to="/give"
                         className={cn(
                             "px-8 py-3 rounded-full font-bold text-sm tracking-wide shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95",
-                            scrolled || !isHome
+                            scrolled
                                 ? "bg-primary text-white hover:bg-primary-dark"
                                 : "bg-gold text-primary-dark hover:bg-gold-light"
                         )}
@@ -84,9 +84,9 @@ const Navbar = () => {
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {isOpen ? (
-                        <X className={scrolled || !isHome || isOpen ? "text-gray-900" : "text-white"} />
+                        <X className={scrolled || isOpen ? "text-gray-900" : "text-white"} />
                     ) : (
-                        <Menu className={scrolled || !isHome ? "text-gray-900" : "text-white"} />
+                        <Menu className={scrolled || isOpen ? "text-gray-900" : "text-white"} />
                     )}
                 </button>
             </div>
