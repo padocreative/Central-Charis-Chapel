@@ -4,40 +4,11 @@ import { Link } from 'react-router-dom';
 import PublicLayout from '../layouts/PublicLayout';
 import SermonCard from '../components/SermonCard';
 import PrayerRequestForm from '../components/PrayerRequestForm';
-
-// Mock Data (Unchanged)
-const MOCK_SERMONS = [
-    {
-        id: 1,
-        title: "Walking in Divine Purpose",
-        preacher: "Rev. Elorm Oscar",
-        date: "Jan 12, 2025",
-        thumbnail: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=800",
-        url: "https://www.youtube.com/watch?v=ysz5S6P_bsU",
-        type: "Sunday Service"
-    },
-    {
-        id: 2,
-        title: "The Power of Persistent Prayer",
-        preacher: "Rev. Elorm Oscar",
-        date: "Jan 05, 2025",
-        thumbnail: "https://images.unsplash.com/photo-1510936111840-65e151ad71bb?auto=format&fit=crop&q=80&w=800",
-        url: "https://www.youtube.com/watch?v=ysz5S6P_bsU",
-        type: "Mid-week"
-    },
-    {
-        id: 3,
-        title: "Grace for the Race",
-        preacher: "Guest Minister",
-        date: "Dec 31, 2024",
-        thumbnail: "https://images.unsplash.com/photo-1507692049790-de58293a4697?auto=format&fit=crop&q=80&w=800",
-        url: "https://www.youtube.com/watch?v=ysz5S6P_bsU",
-        type: "Crossover"
-    },
-];
+import { useSermons } from '../context/SermonContext';
 
 const Home = () => {
     const { scrollY } = useScroll();
+    const { sermons } = useSermons();
     const y1 = useTransform(scrollY, [0, 500], [0, 200]);
     const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
@@ -153,7 +124,7 @@ const Home = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {MOCK_SERMONS.map((sermon, index) => (
+                        {sermons.slice(0, 3).map((sermon, index) => (
                             <motion.div
                                 key={sermon.id}
                                 initial={{ opacity: 0, y: 50 }}
@@ -178,8 +149,8 @@ const Home = () => {
                                 <div className="absolute top-0 left-0 w-full h-full opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
 
                                 <div className="relative z-10">
-                                    <h2 className="text-3xl lg:text-5xl font-heading font-bold mb-6">Need Prayer?</h2>
-                                    <p className="text-base lg:text-lg text-gray-300 mb-8 leading-relaxed">
+                                    <h2 className="text-3xl lg:text-5xl font-heading font-bold text-white mb-6">Need Prayer?</h2>
+                                    <p className="text-base lg:text-lg text-gray-100 mb-8 leading-relaxed">
                                         We believe that prayer changes things. Whatever you are going through, our pastoral team is ready to stand in faith with you.
                                     </p>
 

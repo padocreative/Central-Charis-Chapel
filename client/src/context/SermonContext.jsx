@@ -38,20 +38,27 @@ export const SermonProvider = ({ children }) => {
     const [sermons, setSermons] = useState(MOCK_SERMONS);
     const [loading, setLoading] = useState(false); // Can be used when fetching from Supabase
 
-    // Example function to add a sermon
     const addSermon = async (newSermon) => {
-        // Determine if we are using Supabase or Mock
         if (supabase) {
-            // Supabase logic here (Placeholder)
+            // Supabase logic here
             // const { data, error } = await supabase.from('sermons').insert([newSermon]);
-        } else {
-            // Mock logic
-            setSermons([{ ...newSermon, id: Date.now() }, ...sermons]);
         }
+        // Mock logic (Update local state regardless for immediate feedback if we were using optimistic UI, but here acts as main store)
+        setSermons((prev) => [{ ...newSermon, id: Date.now() }, ...prev]);
+    };
+
+    const deleteSermon = async (id) => {
+        // Supabase logic would go here
+        setSermons((prev) => prev.filter(sermon => sermon.id !== id));
+    };
+
+    const updateSermon = async (updatedSermon) => {
+        // Supabase logic would go here
+        setSermons((prev) => prev.map(sermon => sermon.id === updatedSermon.id ? updatedSermon : sermon));
     };
 
     return (
-        <SermonContext.Provider value={{ sermons, addSermon, loading }}>
+        <SermonContext.Provider value={{ sermons, addSermon, deleteSermon, updateSermon, loading }}>
             {children}
         </SermonContext.Provider>
     );
