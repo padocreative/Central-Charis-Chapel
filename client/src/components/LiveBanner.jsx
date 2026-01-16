@@ -3,6 +3,7 @@ import { useLiveStream } from '../context/LiveStreamContext';
 import VideoModal from './VideoModal';
 import { Play, Youtube, Facebook } from 'lucide-react';
 import { getVideoPlatform } from '../utils/videoUtils';
+import { motion } from 'framer-motion';
 
 const LiveBanner = () => {
     const { isLive, liveUrl, serviceType } = useLiveStream();
@@ -42,8 +43,22 @@ const LiveBanner = () => {
 
     return (
         <>
-            <div className="fixed bottom-6 right-6 z-[90] animate-in slide-in-from-bottom-10 fade-in duration-500">
-                <div className={`${style.bg} rounded-xl shadow-premium overflow-hidden flex items-center p-1 pr-1.5 border ${style.border}`}>
+            <motion.div
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="fixed bottom-6 right-6 z-[90]"
+            >
+                <motion.div
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                    className={`${style.bg} rounded-xl shadow-premium overflow-hidden flex items-center p-1 pr-1.5 border ${style.border}`}
+                >
                     <div className="flex items-center space-x-3 px-3 py-2">
                         <span className="relative flex h-3 w-3">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
@@ -62,8 +77,8 @@ const LiveBanner = () => {
                         <Icon size={14} className="mr-1.5" />
                         Watch
                     </button>
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
 
             <VideoModal
                 isOpen={isModalOpen}
