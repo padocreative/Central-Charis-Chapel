@@ -10,6 +10,7 @@ const SermonManager = () => {
     const [showForm, setShowForm] = useState(false);
     const [editingSermon, setEditingSermon] = useState(null);
     const [modalConfig, setModalConfig] = useState({ isOpen: false, type: 'success', title: '', message: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleAddNew = () => {
         setEditingSermon(null);
@@ -52,6 +53,7 @@ const SermonManager = () => {
     };
 
     const handleFormSubmit = async (data) => {
+        setIsSubmitting(true);
         try {
             if (editingSermon) {
                 await updateSermon({ ...editingSermon, ...data });
@@ -79,6 +81,8 @@ const SermonManager = () => {
                 title: 'Operation Failed',
                 message: 'Something went wrong. Please try again later.',
             });
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -134,6 +138,7 @@ const SermonManager = () => {
                         onSubmit={handleFormSubmit}
                         initialData={editingSermon}
                         onCancel={handleCancel}
+                        isSubmitting={isSubmitting}
                     />
                 </div>
             )}

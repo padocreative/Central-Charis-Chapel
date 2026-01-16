@@ -14,9 +14,13 @@ const StatCard = ({ icon: Icon, label, value, color }) => (
     </div>
 );
 
+// ... imports
+import StatusModal from '../../components/admin/StatusModal';
+
 const DashboardHome = () => {
     const { isLive, liveUrl, updateLiveStatus, loading } = useLiveStream();
     const [urlInput, setUrlInput] = useState('');
+    const [modalConfig, setModalConfig] = useState({ isOpen: false, type: 'success', title: '', message: '' });
 
     useEffect(() => {
         if (liveUrl) setUrlInput(liveUrl);
@@ -24,21 +28,48 @@ const DashboardHome = () => {
 
     const handleToggleLive = async () => {
         const newStatus = !isLive;
-        // If going live, ensure we have a URL (or keep existing)
-        await updateLiveStatus(newStatus, urlInput);
+        try {
+            await updateLiveStatus(newStatus, urlInput);
+        } catch (error) {
+            setModalConfig({
+                isOpen: true,
+                type: 'error',
+                title: 'Error',
+                message: 'Failed to update live status. Please try again.',
+            });
+        }
     };
 
     const handleUrlChange = (e) => {
         setUrlInput(e.target.value);
     };
 
-    const handleSaveUrl = () => {
-        updateLiveStatus(isLive, urlInput);
-        alert("Stream URL saved!");
+    const handleSaveUrl = async () => {
+        try {
+            await updateLiveStatus(isLive, urlInput);
+            setModalConfig({
+                isOpen: true,
+                type: 'success',
+                title: 'Saved',
+                message: 'Stream URL saved successfully!',
+            });
+        } catch (error) {
+            setModalConfig({
+                isOpen: true,
+                type: 'error',
+                title: 'Error',
+                message: 'Failed to save Stream URL.',
+            });
+        }
     };
 
     return (
         <div>
+            <StatusModal
+                {...modalConfig}
+                onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
+            />
+
             <h1 className="text-3xl font-bold font-heading mb-8 text-primary">Dashboard Overview</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">

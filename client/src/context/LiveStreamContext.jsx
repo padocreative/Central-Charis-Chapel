@@ -86,7 +86,7 @@ export const LiveStreamProvider = ({ children }) => {
 
         } catch (error) {
             console.error("Error updating live stream:", error);
-            alert("Failed to update live stream status.");
+            throw error;
         }
     };
 

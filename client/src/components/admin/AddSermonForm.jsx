@@ -1,104 +1,27 @@
-import { useState, useEffect } from 'react';
-import { Check, X, Youtube, Facebook, Upload, AlertCircle, Link as LinkIcon, Image as ImageIcon } from 'lucide-react';
+// ... imports
+import StatusModal from './StatusModal';
 
-const AddSermonForm = ({ onSubmit, initialData = null, onCancel }) => {
-    const [formData, setFormData] = useState({
-        title: '',
-        preacher: 'Head Pastor',
-        date: new Date().toISOString().slice(0, 10), // Default to today: YYYY-MM-DD
-        videoLink: '',
-        topic: '',
-        thumbnail: '', // For auto-fetched or uploaded URL
-    });
+const AddSermonForm = ({ onSubmit, initialData = null, onCancel, isSubmitting = false }) => {
+    // ... existing state
+    const [modalConfig, setModalConfig] = useState({ isOpen: false, type: 'error', title: '', message: '' });
 
-    const [linkStatus, setLinkStatus] = useState('idle'); // idle, valid, invalid
-    const [detectedPlatform, setDetectedPlatform] = useState(null); // 'youtube', 'facebook', or null
-    const [thumbnailPreview, setThumbnailPreview] = useState('');
-
-    // Load initial data if editing
-    useEffect(() => {
-        if (initialData) {
-            const data = {
-                ...initialData,
-                videoLink: initialData.videoLink || initialData.url || ''
-            };
-            setFormData(data);
-            validateLink(data.videoLink);
-            setThumbnailPreview(data.thumbnail);
-        }
-    }, [initialData]);
-
-    const validateLink = (url) => {
-        if (!url) {
-            setLinkStatus('idle');
-            setDetectedPlatform(null);
-            return;
-        }
-
-        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-        const facebookRegex = /^(https?:\/\/)?(www\.)?(facebook\.com|fb\.watch)\/.+$/;
-
-        if (youtubeRegex.test(url)) {
-            setLinkStatus('valid');
-            setDetectedPlatform('youtube');
-            extractYouTubeThumbnail(url);
-        } else if (facebookRegex.test(url)) {
-            setLinkStatus('valid');
-            setDetectedPlatform('facebook');
-            // Facebook thumbnail handling is manual, so we don't auto-set preview unless one exists
-        } else {
-            setLinkStatus('invalid');
-            setDetectedPlatform(null);
-            setThumbnailPreview('');
-        }
-    };
-
-    const extractYouTubeThumbnail = (url) => {
-        let videoId = null;
-        if (url.includes('youtu.be')) {
-            videoId = url.split('youtu.be/')[1].split('?')[0];
-        } else if (url.includes('youtube.com')) {
-            const urlParams = new URL(url).searchParams;
-            videoId = urlParams.get('v');
-        }
-
-        if (videoId) {
-            const thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-            setThumbnailPreview(thumbUrl);
-            setFormData(prev => ({ ...prev, thumbnail: thumbUrl }));
-        }
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-
-        if (name === 'videoLink') {
-            validateLink(value);
-        }
-    };
-
-    // Fallback/Manual upload for Facebook or Custom overrides
-    const handleThumbnailUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            // In a real app, you'd upload to Supabase Storage here and get a URL.
-            // For now, we'll create a local object URL for preview.
-            const objectUrl = URL.createObjectURL(file);
-            setThumbnailPreview(objectUrl);
-            setFormData(prev => ({ ...prev, thumbnail: objectUrl })); // In production, this would be the remote URL
-        }
-    };
+    // ... existing lines 14-93 ...
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         // Final validation
         if (linkStatus === 'invalid') {
-            alert("Please enter a valid video link.");
+            setModalConfig({
+                isOpen: true,
+                type: 'error',
+                title: 'Invalid Video Link',
+                message: 'Please enter a valid YouTube or Facebook video URL before publishing.',
+            });
             return;
         }
 
+        // ... existing submission logic ...
         // Apply fallback logo if no thumbnail provided
         // Map videoLink to url for database consistency
         // Map topic to type for badge display (default to Sunday Service)
@@ -116,6 +39,11 @@ const AddSermonForm = ({ onSubmit, initialData = null, onCancel }) => {
 
     return (
         <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100">
+            <StatusModal
+                {...modalConfig}
+                onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
+            />
+
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold font-heading text-gray-800">
                     {initialData ? 'Edit Sermon' : 'Add New Sermon'}
@@ -125,7 +53,9 @@ const AddSermonForm = ({ onSubmit, initialData = null, onCancel }) => {
                 </button>
             </div>
 
+            {/* ... rest of the form ... */}
             <form onSubmit={handleSubmit} className="space-y-6">
+                {/* ... fields ... */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Title */}
                     <div className="space-y-2">
@@ -277,10 +207,17 @@ const AddSermonForm = ({ onSubmit, initialData = null, onCancel }) => {
                     </button>
                     <button
                         type="submit"
-                        disabled={linkStatus === 'invalid'}
-                        className="px-6 py-2.5 rounded-lg bg-primary text-white font-medium hover:bg-primary-dark shadow-lg shadow-primary/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={linkStatus === 'invalid' || isSubmitting}
+                        className="px-6 py-2.5 rounded-lg bg-primary text-white font-medium hover:bg-primary-dark shadow-lg shadow-primary/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                     >
-                        {initialData ? 'Save Changes' : 'Publish Sermon'}
+                        {isSubmitting ? (
+                            <>
+                                <Loader2 size={20} className="mr-2 animate-spin" />
+                                {initialData ? 'Saving...' : 'Publishing...'}
+                            </>
+                        ) : (
+                            initialData ? 'Save Changes' : 'Publish Sermon'
+                        )}
                     </button>
                 </div>
             </form>
