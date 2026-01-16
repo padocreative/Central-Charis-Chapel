@@ -8,6 +8,7 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
     const [hasStarted, setHasStarted] = useState(false);
+    const [shouldPlay, setShouldPlay] = useState(false); // Local state to control safe playback
 
     // Transform input URL to a safe guaranteed format
     const playableUrl = getPlayableUrl(url);
@@ -18,6 +19,7 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
             setIsLoading(true);
             setError(false);
             setHasStarted(false);
+            setShouldPlay(false);
         }
     }, [isOpen, url]);
 
@@ -35,11 +37,6 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
                 <X size={32} />
                 <span className="sr-only">Close</span>
             </button>
-
-            {/* DEBUG: Remove after fixing */}
-            <p className="fixed top-8 left-8 text-xs text-gray-500 z-[220] font-mono select-all bg-black/50 p-2 rounded">
-                Stream Source: {playableUrl || 'None'}
-            </p>
 
             <div
                 ref={modalContentRef}
@@ -75,10 +72,13 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
                     url={playableUrl}
                     width="100%"
                     height="100%"
-                    playing={playing}
+                    playing={shouldPlay} // Controlled by local state
                     muted={true} // Critical for autoplay on most browsers
                     controls={true}
-                    onReady={() => setIsLoading(false)}
+                    onReady={() => {
+                        setIsLoading(false);
+                        setShouldPlay(true); // Only play when ready!
+                    }}
                     onStart={() => {
                         setIsLoading(false);
                         setHasStarted(true);
