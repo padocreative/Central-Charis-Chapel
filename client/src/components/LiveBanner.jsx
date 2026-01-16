@@ -38,7 +38,6 @@ const LiveBanner = () => {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 url={liveUrl}
-                playing={true}
             />
         </>
     );
