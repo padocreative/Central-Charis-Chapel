@@ -36,6 +36,11 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
                 <span className="sr-only">Close</span>
             </button>
 
+            {/* DEBUG: Remove after fixing */}
+            <p className="fixed top-8 left-8 text-xs text-gray-500 z-[220] font-mono select-all bg-black/50 p-2 rounded">
+                Stream Source: {playableUrl || 'None'}
+            </p>
+
             <div
                 ref={modalContentRef}
                 className="relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10"
