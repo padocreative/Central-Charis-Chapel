@@ -43,13 +43,7 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
                 className="relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10"
                 onClick={e => e.stopPropagation()}
             >
-                {/* Loading State */}
-                {isLoading && !error && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900 text-white z-10">
-                        <Loader2 size={48} className="animate-spin text-primary mb-4" />
-                        <p className="text-sm font-medium text-gray-400">Loading Video...</p>
-                    </div>
-                )}
+
 
                 {/* Error State */}
                 {error && (
