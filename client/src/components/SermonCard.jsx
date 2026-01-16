@@ -1,5 +1,5 @@
 import { Play, Calendar, User, Clock } from 'lucide-react';
-import ReactPlayer from 'react-player';
+import VideoModal from './VideoModal';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -59,28 +59,12 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, type }) => {
             </motion.div>
 
             {/* Cinematic Modal */}
-            {showModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-in fade-in duration-300" onClick={() => setShowModal(false)}>
-                    <button className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
-                        <span className="text-sm uppercase tracking-widest mr-2">Close</span>
-                    </button>
-
-                    <div className="relative w-full max-w-5xl aspect-video rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10" onClick={e => e.stopPropagation()}>
-                        <ReactPlayer
-                            url={url}
-                            width="100%"
-                            height="100%"
-                            playing={true}
-                            controls={true}
-                            config={{
-                                youtube: {
-                                    playerVars: { showinfo: 0, modestbranding: 1 }
-                                }
-                            }}
-                        />
-                    </div>
-                </div>
-            )}
+            <VideoModal
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                url={url}
+                playing={true}
+            />
         </>
     );
 };
