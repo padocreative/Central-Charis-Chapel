@@ -70,6 +70,30 @@ export const getPlayableUrl = (url) => {
 };
 
 /**
+ * Returns a raw embed URL for iframes.
+ * @param {string} url 
+ * @returns {string|null}
+ */
+export const getEmbedUrl = (url) => {
+    const platform = getVideoPlatform(url);
+    const id = getVideoId(url);
+
+    if (!platform || !id) return null;
+
+    if (platform === 'youtube') {
+        return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1`;
+    }
+
+    if (platform === 'facebook') {
+        // Facebook requires the full video URL for the href param
+        const fullUrl = `https://www.facebook.com/facebook/videos/${id}`;
+        return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(fullUrl)}&show_text=0&autoplay=1&muted=1`;
+    }
+
+    return null;
+};
+
+/**
  * Validates if a URL is a supported video link.
  * @param {string} url 
  * @returns {boolean}
