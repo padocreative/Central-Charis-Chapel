@@ -19,6 +19,25 @@ const AddSermonForm = ({ onSubmit, initialData = null, onCancel, isSubmitting = 
     const [detectedPlatform, setDetectedPlatform] = useState(null); // 'youtube', 'facebook', or null
     const [thumbnailPreview, setThumbnailPreview] = useState('');
 
+    // Load initial data if editing
+    useEffect(() => {
+        if (initialData) {
+            // Safely map initialData to form state to prevent undefined values
+            const safeData = {
+                title: initialData.title || '',
+                preacher: initialData.preacher || '',
+                date: initialData.date ? initialData.date.split('T')[0] : new Date().toISOString().slice(0, 10),
+                videoLink: initialData.videoLink || initialData.url || '',
+                topic: initialData.topic || initialData.type || '',
+                thumbnail: initialData.thumbnail || '',
+            };
+
+            setFormData(safeData);
+            validateLink(safeData.videoLink);
+            setThumbnailPreview(safeData.thumbnail);
+        }
+    }, [initialData]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
