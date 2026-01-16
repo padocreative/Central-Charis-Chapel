@@ -82,7 +82,7 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
                     }}
                     config={{
                         youtube: {
-                            playerVars: { showinfo: 0, modestbranding: 1 }
+                            playerVars: { showinfo: 0, modestbranding: 1, origin: window.location.origin }
                         },
                         facebook: {
                             appId: '1309697205772819' // Optional: default legacy app id if needed
