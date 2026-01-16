@@ -1,11 +1,81 @@
-// ... imports
+import { useState, useEffect } from 'react';
+import { Check, X, Youtube, Facebook, Upload, AlertCircle, Link as LinkIcon, Image as ImageIcon, Loader2 } from 'lucide-react';
 import StatusModal from './StatusModal';
 
 const AddSermonForm = ({ onSubmit, initialData = null, onCancel, isSubmitting = false }) => {
     // ... existing state
     const [modalConfig, setModalConfig] = useState({ isOpen: false, type: 'error', title: '', message: '' });
 
-    // ... existing lines 14-93 ...
+    const [formData, setFormData] = useState({
+        title: '',
+        preacher: 'Head Pastor',
+        date: new Date().toISOString().slice(0, 10), // Default to today: YYYY-MM-DD
+        videoLink: '',
+        topic: '',
+        thumbnail: '', // For auto-fetched or uploaded URL
+    });
+
+    const [linkStatus, setLinkStatus] = useState('idle'); // idle, valid, invalid
+    const [detectedPlatform, setDetectedPlatform] = useState(null); // 'youtube', 'facebook', or null
+    const [thumbnailPreview, setThumbnailPreview] = useState('');
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+
+        if (name === 'videoLink') {
+            validateLink(value);
+        }
+    };
+
+    const validateLink = (url) => {
+        if (!url) {
+            setLinkStatus('idle');
+            setDetectedPlatform(null);
+            return;
+        }
+
+        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+        const facebookRegex = /^(https?:\/\/)?(www\.)?(facebook\.com|fb\.watch)\/.+$/;
+
+        if (youtubeRegex.test(url)) {
+            setLinkStatus('valid');
+            setDetectedPlatform('youtube');
+            extractYouTubeThumbnail(url);
+        } else if (facebookRegex.test(url)) {
+            setLinkStatus('valid');
+            setDetectedPlatform('facebook');
+        } else {
+            setLinkStatus('invalid');
+            setDetectedPlatform(null);
+            setThumbnailPreview('');
+        }
+    };
+
+    const extractYouTubeThumbnail = (url) => {
+        let videoId = null;
+        if (url.includes('youtu.be')) {
+            videoId = url.split('youtu.be/')[1].split('?')[0];
+        } else if (url.includes('youtube.com')) {
+            const urlParams = new URL(url).searchParams;
+            videoId = urlParams.get('v');
+        }
+
+        if (videoId) {
+            const thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+            setThumbnailPreview(thumbUrl);
+            setFormData(prev => ({ ...prev, thumbnail: thumbUrl }));
+        }
+    };
+
+    const handleThumbnailUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const objectUrl = URL.createObjectURL(file);
+            setThumbnailPreview(objectUrl);
+            setFormData(prev => ({ ...prev, thumbnail: objectUrl }));
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
