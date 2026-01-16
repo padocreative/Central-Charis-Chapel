@@ -18,9 +18,13 @@ const AddSermonForm = ({ onSubmit, initialData = null, onCancel }) => {
     // Load initial data if editing
     useEffect(() => {
         if (initialData) {
-            setFormData(initialData);
-            validateLink(initialData.videoLink);
-            setThumbnailPreview(initialData.thumbnail);
+            const data = {
+                ...initialData,
+                videoLink: initialData.videoLink || initialData.url || ''
+            };
+            setFormData(data);
+            validateLink(data.videoLink);
+            setThumbnailPreview(data.thumbnail);
         }
     }, [initialData]);
 
@@ -96,10 +100,15 @@ const AddSermonForm = ({ onSubmit, initialData = null, onCancel }) => {
         }
 
         // Apply fallback logo if no thumbnail provided
+        // Map videoLink to url for database consistency
+        // Map topic to type for badge display (default to Sunday Service)
+        const { videoLink, topic, ...rest } = formData;
+
         const finalData = {
-            ...formData,
+            ...rest,
+            url: videoLink,
+            type: topic || 'Sunday Service',
             thumbnail: formData.thumbnail || '/logo.png', // Assuming /logo.png exists as fallback
-            type: detectedPlatform === 'youtube' ? 'YouTube' : detectedPlatform === 'facebook' ? 'Facebook' : 'Video'
         };
 
         onSubmit(finalData);
@@ -204,10 +213,10 @@ const AddSermonForm = ({ onSubmit, initialData = null, onCancel }) => {
                             placeholder="Paste YouTube or Facebook link here..."
                             required
                             className={`w-full pl-12 pr-12 py-3 rounded-xl border outline-none transition-all ${linkStatus === 'invalid'
-                                    ? 'border-red-300 focus:border-red-500 focus:ring-red-100'
-                                    : linkStatus === 'valid'
-                                        ? 'border-green-300 focus:border-green-500 focus:ring-green-100'
-                                        : 'border-gray-200 focus:border-primary focus:ring-primary/20'
+                                ? 'border-red-300 focus:border-red-500 focus:ring-red-100'
+                                : linkStatus === 'valid'
+                                    ? 'border-green-300 focus:border-green-500 focus:ring-green-100'
+                                    : 'border-gray-200 focus:border-primary focus:ring-primary/20'
                                 }`}
                         />
                         <div className="absolute right-4 top-1/2 -translate-y-1/2">

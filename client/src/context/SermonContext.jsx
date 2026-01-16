@@ -35,26 +35,80 @@ const MOCK_SERMONS = [
 ];
 
 export const SermonProvider = ({ children }) => {
-    const [sermons, setSermons] = useState(MOCK_SERMONS);
-    const [loading, setLoading] = useState(false); // Can be used when fetching from Supabase
+    const [sermons, setSermons] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchSermons = async () => {
+        if (!supabase) return;
+
+        try {
+            const { data, error } = await supabase
+                .from('sermons')
+                .select('*')
+                .order('date', { ascending: false });
+
+            if (error) throw error;
+            setSermons(data || []);
+        } catch (error) {
+            console.error('Error fetching sermons:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        // Initial Fetch
+        fetchSermons();
+
+        if (!supabase) return;
+
+        // Real-time Subscription
+        const subscription = supabase
+            .channel('sermons_channel')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'sermons' }, (payload) => {
+                // For simplicity and consistency, re-fetch on any change. 
+                // Alternatively, we could append/filter the local state based on payload.eventType
+                fetchSermons();
+            })
+            .subscribe();
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, []);
 
     const addSermon = async (newSermon) => {
-        if (supabase) {
-            // Supabase logic here
-            // const { data, error } = await supabase.from('sermons').insert([newSermon]);
+        if (!supabase) {
+            alert("Supabase client not initialized. Check your environment variables.");
+            return;
         }
-        // Mock logic (Update local state regardless for immediate feedback if we were using optimistic UI, but here acts as main store)
-        setSermons((prev) => [{ ...newSermon, id: Date.now() }, ...prev]);
+
+        const { error } = await supabase.from('sermons').insert([newSermon]);
+        if (error) {
+            console.error("Error adding sermon:", error);
+            alert("Failed to add sermon. See console for details.");
+        }
     };
 
     const deleteSermon = async (id) => {
-        // Supabase logic would go here
-        setSermons((prev) => prev.filter(sermon => sermon.id !== id));
+        if (!supabase) return;
+
+        const { error } = await supabase.from('sermons').delete().eq('id', id);
+        if (error) {
+            console.error("Error deleting sermon:", error);
+            alert("Failed to delete sermon.");
+        }
     };
 
     const updateSermon = async (updatedSermon) => {
-        // Supabase logic would go here
-        setSermons((prev) => prev.map(sermon => sermon.id === updatedSermon.id ? updatedSermon : sermon));
+        if (!supabase) return;
+
+        const { id, ...updates } = updatedSermon;
+        const { error } = await supabase.from('sermons').update(updates).eq('id', id);
+        if (error) {
+            console.error("Error updating sermon:", error);
+            alert("Failed to update sermon.");
+        }
     };
 
     return (
