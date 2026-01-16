@@ -5,7 +5,7 @@ import { Play, Youtube, Facebook } from 'lucide-react';
 import { getVideoPlatform } from '../utils/videoUtils';
 
 const LiveBanner = () => {
-    const { isLive, liveUrl } = useLiveStream();
+    const { isLive, liveUrl, serviceType } = useLiveStream();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     if (!isLive) return null;
@@ -51,7 +51,7 @@ const LiveBanner = () => {
                         </span>
                         <div className="flex flex-col">
                             <span className="text-white text-xs font-bold uppercase tracking-wider leading-none mb-0.5">{style.label}</span>
-                            <span className="text-white/90 text-[10px] font-medium leading-none">Sunday Service</span>
+                            <span className="text-white/90 text-[10px] font-medium leading-none">{serviceType || 'Sunday Service'}</span>
                         </div>
                     </div>
 

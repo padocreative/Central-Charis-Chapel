@@ -6,6 +6,7 @@ const LiveStreamContext = createContext();
 export const LiveStreamProvider = ({ children }) => {
     const [isLive, setIsLive] = useState(false);
     const [liveUrl, setLiveUrl] = useState('');
+    const [serviceType, setServiceType] = useState('Sunday Service');
     const [loading, setLoading] = useState(true);
 
     const fetchLiveStatus = async () => {
@@ -26,6 +27,7 @@ export const LiveStreamProvider = ({ children }) => {
             if (data) {
                 setIsLive(data.is_live);
                 setLiveUrl(data.live_url);
+                setServiceType(data.service_type || 'Sunday Service');
             } else if (error && error.code !== 'PGRST116') {
                 // PGRST116 is "The result contains 0 rows", which is fine, we just default to false
                 console.error('Error fetching live stream status:', error.message, error.details, error.hint);
@@ -52,6 +54,7 @@ export const LiveStreamProvider = ({ children }) => {
                 if (payload.new) {
                     setIsLive(payload.new.is_live);
                     setLiveUrl(payload.new.live_url);
+                    setServiceType(payload.new.service_type || 'Sunday Service');
                 }
             })
             .subscribe();
@@ -61,11 +64,12 @@ export const LiveStreamProvider = ({ children }) => {
         };
     }, []);
 
-    const updateLiveStatus = async (newIsLive, newUrl) => {
+    const updateLiveStatus = async (newIsLive, newUrl, newServiceType) => {
         if (!supabase) {
             // Fallback for local testing if no Supabase
             setIsLive(newIsLive);
             setLiveUrl(newUrl);
+            setServiceType(newServiceType || 'Sunday Service');
             return;
         }
 
@@ -74,7 +78,12 @@ export const LiveStreamProvider = ({ children }) => {
             // Assuming we use a fixed ID like 1 for the global configuration
             const { data, error } = await supabase
                 .from('live_stream')
-                .upsert({ id: 1, is_live: newIsLive, live_url: newUrl })
+                .upsert({
+                    id: 1,
+                    is_live: newIsLive,
+                    live_url: newUrl,
+                    service_type: newServiceType || 'Sunday Service'
+                })
                 .select();
 
             if (error) throw error;
@@ -83,6 +92,7 @@ export const LiveStreamProvider = ({ children }) => {
             // but we can optimistic update here too if we want faster feedback
             setIsLive(newIsLive);
             setLiveUrl(newUrl);
+            setServiceType(newServiceType);
 
         } catch (error) {
             console.error("Error updating live stream:", error);
@@ -91,7 +101,7 @@ export const LiveStreamProvider = ({ children }) => {
     };
 
     return (
-        <LiveStreamContext.Provider value={{ isLive, liveUrl, updateLiveStatus, loading }}>
+        <LiveStreamContext.Provider value={{ isLive, liveUrl, serviceType, updateLiveStatus, loading }}>
             {children}
         </LiveStreamContext.Provider>
     );

@@ -18,18 +18,20 @@ const StatCard = ({ icon: Icon, label, value, color }) => (
 import StatusModal from '../../components/admin/StatusModal';
 
 const DashboardHome = () => {
-    const { isLive, liveUrl, updateLiveStatus, loading } = useLiveStream();
+    const { isLive, liveUrl, serviceType, updateLiveStatus, loading } = useLiveStream();
     const [urlInput, setUrlInput] = useState('');
+    const [typeInput, setTypeInput] = useState('Sunday Service');
     const [modalConfig, setModalConfig] = useState({ isOpen: false, type: 'success', title: '', message: '' });
 
     useEffect(() => {
         if (liveUrl) setUrlInput(liveUrl);
-    }, [liveUrl]);
+        if (serviceType) setTypeInput(serviceType);
+    }, [liveUrl, serviceType]);
 
     const handleToggleLive = async () => {
         const newStatus = !isLive;
         try {
-            await updateLiveStatus(newStatus, urlInput);
+            await updateLiveStatus(newStatus, urlInput, typeInput);
         } catch (error) {
             setModalConfig({
                 isOpen: true,
@@ -46,7 +48,7 @@ const DashboardHome = () => {
 
     const handleSaveUrl = async () => {
         try {
-            await updateLiveStatus(isLive, urlInput);
+            await updateLiveStatus(isLive, urlInput, typeInput);
             setModalConfig({
                 isOpen: true,
                 type: 'success',
@@ -92,22 +94,42 @@ const DashboardHome = () => {
 
                     <div className="flex flex-col md:flex-row gap-6 items-start md:items-end">
                         <div className="flex-1 w-full">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Live Stream URL (YouTube/Facebook)
-                            </label>
-                            <div className="flex gap-2">
-                                <input
-                                    type="text"
-                                    value={urlInput}
-                                    onChange={handleUrlChange}
-                                    placeholder="https://www.youtube.com/watch?v=..."
-                                    className="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2.5 border"
-                                />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Service Name
+                                    </label>
+                                    <select
+                                        value={typeInput}
+                                        onChange={(e) => setTypeInput(e.target.value)}
+                                        className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2.5 border"
+                                    >
+                                        <option value="Sunday Service">Sunday Service</option>
+                                        <option value="Midweek Service">Midweek Service</option>
+                                        <option value="Worship Night">Worship Night</option>
+                                        <option value="Special Event">Special Event</option>
+                                        <option value="Conference">Conference</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Stream URL (YouTube/Facebook)
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={urlInput}
+                                        onChange={handleUrlChange}
+                                        placeholder="https://..."
+                                        className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm p-2.5 border"
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex justify-end">
                                 <button
                                     onClick={handleSaveUrl}
                                     className="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 font-medium text-sm transition-colors"
                                 >
-                                    Save
+                                    Save Settings
                                 </button>
                             </div>
                         </div>
