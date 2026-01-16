@@ -29,10 +29,10 @@ const Sermons = () => {
                         <span className="inline-block py-1 px-3 border border-gold/50 rounded-full text-gold text-xs font-bold uppercase tracking-[0.2em] mb-4">
                             Sermon Library
                         </span>
-                        <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+                        <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 drop-shadow-lg">
                             Watch & Listen
                         </h1>
-                        <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-gray-100 text-lg max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                             Explore our complete collection of messages. Filter by series, topic, or speaker to find exactly what you need.
                         </p>
                     </motion.div>
