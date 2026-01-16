@@ -2,23 +2,15 @@ import { Play, Calendar, User, Clock } from 'lucide-react';
 import VideoModal from './VideoModal';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { isValidVideoUrl } from '../utils/videoUtils';
 
 const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_url, type }) => {
     const [showModal, setShowModal] = useState(false);
 
     // Robustly resolve the video URL
-    let videoUrl = url || videoLink || video_url;
+    const rawVideoUrl = url || videoLink || video_url;
+    const hasValidVideo = isValidVideoUrl(rawVideoUrl);
 
-    // Clean and fix URL
-    if (videoUrl) {
-        // Remove whitespace
-        videoUrl = videoUrl.toString().trim();
-
-        // Add protocol if missing
-        if (!videoUrl.startsWith('http')) {
-            videoUrl = `https://${videoUrl}`;
-        }
-    }
 
     return (
         <>
@@ -44,7 +36,7 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_ur
 
                     {/* Play Button Overlay */}
                     <div
-                        onClick={() => videoUrl ? setShowModal(true) : alert("No video link available for this sermon.")}
+                        onClick={() => hasValidVideo ? setShowModal(true) : alert("No video link available for this sermon.")}
                         className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
                     >
                         <div className="w-16 h-16 bg-gold rounded-full flex items-center justify-center shadow-lg transform scale-50 group-hover:scale-100 transition-transform duration-300">
@@ -67,7 +59,7 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_ur
 
                     <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                         <span
-                            onClick={() => videoUrl ? setShowModal(true) : alert("No video link available for this sermon.")}
+                            onClick={() => hasValidVideo ? setShowModal(true) : alert("No video link available for this sermon.")}
                             className="text-xs font-bold text-primary uppercase tracking-wider group-hover:translate-x-1 transition-transform inline-flex items-center cursor-pointer hover:text-primary-dark"
                         >
                             Watch Sermon
@@ -81,7 +73,7 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_ur
             <VideoModal
                 isOpen={showModal}
                 onClose={() => setShowModal(false)}
-                url={videoUrl}
+                url={rawVideoUrl}
                 playing={true}
             />
         </>

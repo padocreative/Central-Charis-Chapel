@@ -1,12 +1,16 @@
 import { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { X, Loader2, AlertCircle } from 'lucide-react';
+import { getPlayableUrl } from '../utils/videoUtils';
 
 const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
     const modalContentRef = useRef(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
     const [hasStarted, setHasStarted] = useState(false);
+
+    // Transform input URL to a safe guaranteed format
+    const playableUrl = getPlayableUrl(url);
 
     // Reset state when modal opens or url changes
     useEffect(() => {
@@ -63,7 +67,7 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
                 )}
 
                 <ReactPlayer
-                    url={url}
+                    url={playableUrl}
                     width="100%"
                     height="100%"
                     playing={playing}
