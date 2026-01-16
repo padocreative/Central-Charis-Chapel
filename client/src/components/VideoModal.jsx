@@ -88,7 +88,6 @@ const VideoModal = ({ isOpen, onClose, url, playing = false }) => {
                             appId: '1309697205772819' // Optional: default legacy app id if needed
                         }
                     }}
-                    style={{ opacity: hasStarted ? 1 : 0 }}
                 />
             </div>
         </div>
