@@ -16,10 +16,10 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_ur
         <>
             <motion.div
                 whileHover={{ y: -10 }}
-                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 w-full"
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-premium transition-all duration-300 w-full flex flex-col h-full"
             >
                 {/* Thumbnail Layer */}
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative aspect-video overflow-hidden shrink-0">
                     <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors z-10" />
                     <img
                         src={thumbnail}
@@ -46,7 +46,7 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_ur
                 </div>
 
                 {/* Content */}
-                <div className="p-6 relative">
+                <div className="p-6 relative flex flex-col flex-grow">
                     <div className="flex items-center text-xs font-semibold text-gold mb-3 space-x-3 uppercase tracking-wide">
                         <span className="flex items-center"><Calendar size={12} className="mr-1" /> {date}</span>
                         <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
@@ -57,7 +57,7 @@ const SermonCard = ({ title, preacher, date, thumbnail, url, videoLink, video_ur
                         {title}
                     </h3>
 
-                    <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                    <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
                         <span
                             onClick={() => hasValidVideo ? setShowModal(true) : alert("No video link available for this sermon.")}
                             className="text-xs font-bold text-primary uppercase tracking-wider group-hover:translate-x-1 transition-transform inline-flex items-center cursor-pointer hover:text-primary-dark"
