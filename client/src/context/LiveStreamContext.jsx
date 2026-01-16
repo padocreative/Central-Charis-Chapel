@@ -28,7 +28,7 @@ export const LiveStreamProvider = ({ children }) => {
                 setLiveUrl(data.live_url);
             } else if (error && error.code !== 'PGRST116') {
                 // PGRST116 is "The result contains 0 rows", which is fine, we just default to false
-                console.error('Error fetching live stream status:', error);
+                console.error('Error fetching live stream status:', error.message, error.details, error.hint);
             }
         } catch (error) {
             console.error('Unexpected error fetching live status:', error);
