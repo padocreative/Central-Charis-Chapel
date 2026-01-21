@@ -1,6 +1,8 @@
 import { Video, Mail, Calendar } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useLiveStream } from '../../context/LiveStreamContext';
+import { useSermons } from '../../context/SermonContext';
+import { supabase } from '../../supabaseClient';
 
 const StatCard = ({ icon: Icon, label, value, color }) => (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
@@ -19,9 +21,28 @@ import StatusModal from '../../components/admin/StatusModal';
 
 const DashboardHome = () => {
     const { isLive, liveUrl, serviceType, updateLiveStatus, loading } = useLiveStream();
+    const { sermons } = useSermons();
+    const [prayerCount, setPrayerCount] = useState(0);
     const [urlInput, setUrlInput] = useState('');
     const [typeInput, setTypeInput] = useState('Sunday Service');
     const [modalConfig, setModalConfig] = useState({ isOpen: false, type: 'success', title: '', message: '' });
+
+    useEffect(() => {
+        const fetchPrayerCount = async () => {
+            try {
+                const { count, error } = await supabase
+                    .from('prayer_requests')
+                    .select('*', { count: 'exact', head: true });
+
+                if (error) throw error;
+                setPrayerCount(count || 0);
+            } catch (err) {
+                console.error('Error fetching prayer count:', err);
+            }
+        };
+
+        fetchPrayerCount();
+    }, []);
 
     useEffect(() => {
         if (liveUrl) setUrlInput(liveUrl);
@@ -75,9 +96,9 @@ const DashboardHome = () => {
             <h1 className="text-3xl font-bold font-heading mb-8 text-primary">Dashboard Overview</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <StatCard icon={Video} label="Total Sermons" value="124" color="bg-blue-600" />
-                <StatCard icon={Mail} label="Unread Prayer Requests" value="5" color="bg-red-500" />
-                <StatCard icon={Calendar} label="Upcoming Events" value="3" color="bg-green-500" />
+                <StatCard icon={Video} label="Total Sermons" value={sermons.length} color="bg-blue-600" />
+                <StatCard icon={Mail} label="Total Prayer Requests" value={prayerCount} color="bg-red-500" />
+                <StatCard icon={Calendar} label="Upcoming Events" value="--" color="bg-green-500" />
             </div>
 
             {/* Live Stream Manager */}
