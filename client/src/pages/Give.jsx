@@ -91,7 +91,7 @@ const Give = () => {
                         className="mb-8"
                     >
                         <Heart className="mx-auto text-gold mb-6" size={60} />
-                        <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">Generous Giving</h1>
+                        <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-white">Generous Giving</h1>
                         <p className="max-w-2xl mx-auto text-lg md:text-xl text-gray-200 font-light italic opacity-90">
                             "Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver."
                             <span className="block mt-2 font-bold not-italic text-gold">— 2 Corinthians 9:7</span>
