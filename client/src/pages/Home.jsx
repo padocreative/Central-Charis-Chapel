@@ -50,7 +50,7 @@ const Home = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.4 }}
-                            className="text-4xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-4 tracking-tight leading-none"
+                            className="text-3xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-4 tracking-tight leading-none"
                         >
                             Central <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-light">Charis</span>
                         </motion.h1>

@@ -27,7 +27,7 @@ const PublicLayout = ({ children }) => {
                         <h4 className="font-bold text-lg mb-6 text-gold">Connect</h4>
                         <p className="text-gray-300 mb-2">P. O. Box KF 542, Koforidua</p>
                         <p className="text-gray-300 mb-2">No. 1 Central Charis Street, New Tafo Akim</p>
-                        <p className="text-gray-300 mb-2">0594636355</p>
+                        <p className="text-gray-300 font-bold text-white">0594636355</p>
                         <p className="text-gray-300 font-bold text-white">0247907930</p>
                     </div>
                 </div>
