@@ -7,6 +7,7 @@ import SermonManager from './pages/admin/SermonManager';
 import ProtectedRoute from './components/ProtectedRoute';
 import Sermons from './pages/Sermons';
 import Give from './pages/Give';
+import About from './pages/About';
 import LiveBanner from './components/LiveBanner';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/sermons" element={<Sermons />} />
         <Route path="/events" element={<div className="p-20 text-center">Events Page (Coming Soon)</div>} />
-        <Route path="/about" element={<div className="p-20 text-center">About Page (Coming Soon)</div>} />
+        <Route path="/about" element={<About />} />
         <Route path="/give" element={<Give />} />
 
         {/* Admin Login */}
